@@ -35,7 +35,7 @@ require_once __DIR__.'./user_credential.php';
         }
         
     }catch(Exception $ex){
-
+        echo "Message: ". $ex->getMessage();
     }
    // echo json_encode($response);
 ?>

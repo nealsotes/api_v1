@@ -24,11 +24,13 @@
             $this->user_password = $user_password;
         }
 
-        function setUserEmail($user_email){
+        function setUserEmail($user_email){ 
             $this->user_email = $user_email;
         }
-
-       
+        function setUserId($user_id){
+            $this->user_id = $user_id;
+        }
+     
        
         //INSERT    
         function insertCredential(){
@@ -48,33 +50,20 @@
             $sqlQuery = "DELETE FROM " . $this->_table . " WHERE user_id = ?";
            // $stmt = mysqli_query($this->_conn,$sqlQuery);
             $stmt = $this->_conn->prepare($sqlQuery);
-            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+           //Bind
             $stmt->bind_param("i", $this->user_id);
-            if($stmt->execute()){
-                return true;
-            }
-            return false;
+            return $stmt->execute();
+      
         }
                 
         //UPDATE
         function updateCredential(){
             $sqlQuery = "UPDATE ".$this->_table ." SET user_name = ?, user_password = ?, user_email = ? WHERE user_id = ?";
             $stmt = $this->_conn->prepare($sqlQuery);
-            $this->user_name=htmlspecialchars(strip_tags($this->user_name));
-            $this->user_password=htmlspecialchars(strip_tags($this->user_password));
-            $this->user_email=htmlspecialchars(strip_tags($this->user_email));
-            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
-            
+        
             //bind data
             $stmt->bind_param("sssi",$this->user_name,$this->user_password,$this->user_email,$this->user_id);
-            
-
-            
-            if($stmt->execute()){
-                return true;
-            }else{
-                return false;
-            }
+            return $stmt->execute();
         }
     }
 
